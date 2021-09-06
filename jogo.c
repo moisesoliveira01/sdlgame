@@ -180,7 +180,6 @@ void hitboss(ENTITY *boss, ENTITY *bullet){
 
       if (distancex < 40 && distancey < 60){
       boss->health -= 1;
-      //printf("boss health :%d\n", boss->health);
       bullet->health = 0;
       }
    }
@@ -203,7 +202,6 @@ void playerbosscollision(ENTITY boss){
    }
 
    if (distancepx < 60 && distancepy < 60 && boss.health > 0 && gameover != 0){
-   //printf("VOCÊ FOI ATINGIDO!\n");
    gameover = 1;
    time = 0;
    }
@@ -253,7 +251,6 @@ void playercollision(ENTITY enem[], int qenem){
       }
 
       if (distancepx < 40 && distancepy < 40 && enem[i].health == 1 && gameover == 0){
-      //printf("VOCÊ FOI ATINGIDO!\n");
       gameover = 1;
       time = 0;
       }
@@ -295,7 +292,6 @@ void spawnbonus(ENTITY *bonus, int xpos, int ypos){
    bonus->health = 1;
 
    qbonus += 1;
-   //printf("SURGIU UM BONUS\n");
 
 }
 
@@ -324,7 +320,6 @@ void updatebonus(ENTITY *bonus, int *gotbonus){
       if (dbonusx < 30 && dbonusy < 30){
       bonus->health = 0;
       *gotbonus = 1;
-      //printf("VOCÊ PEGOU UM BONUS!\n");
       }
    }
 }
@@ -368,7 +363,7 @@ int main(int argc, char *argv[]){
    file = fopen("pontuacao", "r+");
 
    //inicializar texto
-   TTF_Font *font = TTF_OpenFont("arial-mt-narrow-bold-italic.ttf", 20);
+   TTF_Font *font = TTF_OpenFont("fonte/arial-mt-narrow-bold-italic.ttf", 20);
 
    SDL_Color fontcolor = {255, 255, 255};
 
@@ -383,25 +378,25 @@ int main(int argc, char *argv[]){
    SDL_Rect localtext = {cameraRect.x + 15, cameraRect.y + 10, 0, 0};
 
    //carregar as imagens de jogador e background usando a biblioteca SDL_image
-   SDL_Surface* bgsurface = IMG_Load("spacestage.png");
-   SDL_Surface* playersurface = IMG_Load("nave.png");
+   SDL_Surface* bgsurface = IMG_Load("telas/spacestage.png");
+   SDL_Surface* playersurface = IMG_Load("sprites/nave.png");
 
    //carregar imagem para as bullets
    ENTITY bullet;
    memset(&bullet, 0, sizeof(ENTITY));
-   bullet.surface = IMG_Load("bullet12.png");
+   bullet.surface = IMG_Load("sprites/bullet12.png");
 
    //carregar imagem para o inimigo 1
    ENTITY enemy;
    memset(&enemy, 0 , sizeof(ENTITY));
-   enemy.surface = IMG_Load("enemy.png");
+   enemy.surface = IMG_Load("sprites/enemy.png");
 
    //segunda horda de inimigos
    int i;
    ENTITY enemies[4];
 
    for (i = 0; i < 4; i++){
-   enemies[i].surface = IMG_Load("enemy.png");
+   enemies[i].surface = IMG_Load("sprites/enemy.png");
    enemies[i].texture = SDL_CreateTextureFromSurface(rend, enemies[i].surface);
 
    SDL_FreeSurface(enemies[i].surface);
@@ -411,7 +406,7 @@ int main(int argc, char *argv[]){
    ENTITY shotenemies[2];
 
    for (i = 0; i < 2; i++){
-   shotenemies[i].surface = IMG_Load("shooterenemy.png");
+   shotenemies[i].surface = IMG_Load("sprites/shooterenemy.png");
    shotenemies[i].texture = SDL_CreateTextureFromSurface(rend, shotenemies[i].surface);
 
    SDL_FreeSurface(shotenemies[i].surface);
@@ -421,7 +416,7 @@ int main(int argc, char *argv[]){
    ENTITY enemyg[3];
 
    for (i = 0; i < 3; i++){
-   enemyg[i].surface = IMG_Load("greenenemy.png");
+   enemyg[i].surface = IMG_Load("sprites/greenenemy.png");
    enemyg[i].texture = SDL_CreateTextureFromSurface(rend, enemyg[i].surface);
 
    SDL_FreeSurface(enemyg[i].surface);
@@ -431,7 +426,7 @@ int main(int argc, char *argv[]){
    ENTITY penemy[3];
 
    for (i = 0; i < 3; i++){
-   penemy[i].surface = IMG_Load("plasmaenemy.png");
+   penemy[i].surface = IMG_Load("sprites/plasmaenemy.png");
    penemy[i].texture = SDL_CreateTextureFromSurface(rend, penemy[i].surface);
 
    SDL_FreeSurface(penemy[i].surface);
@@ -441,7 +436,7 @@ int main(int argc, char *argv[]){
    ENTITY pbullets[3];
 
    for (i = 0; i < 3; i++){
-   pbullets[i].surface = IMG_Load("plasmabullet.png");
+   pbullets[i].surface = IMG_Load("sprites/plasmabullet.png");
    pbullets[i].texture = SDL_CreateTextureFromSurface(rend, pbullets[i].surface);
 
    SDL_FreeSurface(pbullets[i].surface);
@@ -451,7 +446,7 @@ int main(int argc, char *argv[]){
    ENTITY penemy2[5];
 
    for (i = 0; i < 5; i++){
-   penemy2[i].surface = IMG_Load("plasmaenemy.png");
+   penemy2[i].surface = IMG_Load("sprites/plasmaenemy.png");
    penemy2[i].texture = SDL_CreateTextureFromSurface(rend, penemy2[i].surface);
 
    SDL_FreeSurface(penemy2[i].surface);
@@ -461,7 +456,7 @@ int main(int argc, char *argv[]){
    ENTITY pbullets2[5];
 
    for (i = 0; i < 5; i++){
-   pbullets2[i].surface = IMG_Load("plasmabullet.png");
+   pbullets2[i].surface = IMG_Load("sprites/plasmabullet.png");
    pbullets2[i].texture = SDL_CreateTextureFromSurface(rend, pbullets2[i].surface);
 
    SDL_FreeSurface(pbullets2[i].surface);
@@ -470,14 +465,14 @@ int main(int argc, char *argv[]){
    //boss 1
    ENTITY boss;
    int bossdefeated = 0;
-   boss.surface = IMG_Load("deathen.png");
+   boss.surface = IMG_Load("sprites/deathen.png");
    boss.texture = SDL_CreateTextureFromSurface(rend, boss.surface);
 
    SDL_FreeSurface(boss.surface);
 
    ENTITY bossbullets[4];
    for (i = 0; i < 4; i++){
-   bossbullets[i].surface = IMG_Load("plasmabullet.png");
+   bossbullets[i].surface = IMG_Load("sprites/plasmabullet.png");
    bossbullets[i].texture = SDL_CreateTextureFromSurface(rend, bossbullets[i].surface);
 
    SDL_FreeSurface(bossbullets[i].surface);
@@ -485,7 +480,7 @@ int main(int argc, char *argv[]){
 
    //carregar bonus
    ENTITY bonus;
-   bonus.surface = IMG_Load("bonus.png");
+   bonus.surface = IMG_Load("sprites/bonus.png");
    bonus.texture = SDL_CreateTextureFromSurface(rend, bonus.surface);
    int gotbonus1 = 0;
 
@@ -567,7 +562,6 @@ int main(int argc, char *argv[]){
             case SDL_SCANCODE_J:
             case SDL_SCANCODE_SPACE:
             fire = 1;
-            //printf("ATIRANDO\n");
             break;
             }
          break;
@@ -592,7 +586,6 @@ int main(int argc, char *argv[]){
             case SDL_SCANCODE_J:
             case SDL_SCANCODE_SPACE:
             fire = 0;
-            //printf("PAROU DE ATIRAR\n");
             break;
             }
          break;
@@ -601,7 +594,7 @@ int main(int argc, char *argv[]){
 
       i = 0;
       while (digname == 1){
-      bgsurface = IMG_Load("gameover.png");
+      bgsurface = IMG_Load("telas/gameover.png");
       bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && digname == 1){
@@ -1022,7 +1015,7 @@ int main(int argc, char *argv[]){
 
    while (initscreen == 1){
    while (menu1 == 1){
-   bgsurface = IMG_Load("menu11.png");
+   bgsurface = IMG_Load("telas/menu11.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && menu1 == 1){
@@ -1046,7 +1039,7 @@ int main(int argc, char *argv[]){
             case SDL_SCANCODE_J:
             case SDL_SCANCODE_SPACE:
             menu1 = menu2 = menu3 = menu4 = menu5 = cmenu = movmenu = histmenu = rankmenu = 0;
-            bgsurface = IMG_Load("spacestage.png");
+            bgsurface = IMG_Load("telas/spacestage.png");
             bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
             SDL_FreeSurface(bgsurface);
@@ -1061,7 +1054,7 @@ int main(int argc, char *argv[]){
    }
 
    while (menu2 == 1){
-   bgsurface = IMG_Load("menu22.png");
+   bgsurface = IMG_Load("telas/menu22.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && menu2 == 1){
@@ -1097,7 +1090,7 @@ int main(int argc, char *argv[]){
    }
 
    while (menu3 == 1){
-   bgsurface = IMG_Load("menu33.png");
+   bgsurface = IMG_Load("telas/menu33.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && menu3 == 1){
@@ -1133,7 +1126,7 @@ int main(int argc, char *argv[]){
    }
 
    while (menu4 == 1){
-   bgsurface = IMG_Load("menu44.png");
+   bgsurface = IMG_Load("telas/menu44.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && menu4 == 1){
@@ -1169,7 +1162,7 @@ int main(int argc, char *argv[]){
    }
 
    while (menu5 == 1){
-   bgsurface = IMG_Load("menu55.png");
+   bgsurface = IMG_Load("telas/menu55.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && menu5 == 1){
@@ -1205,7 +1198,7 @@ int main(int argc, char *argv[]){
    }
 
    while (movmenu == 1){
-   bgsurface = IMG_Load("menumover.png");
+   bgsurface = IMG_Load("telas/menumover.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && movmenu == 1){
@@ -1232,7 +1225,7 @@ int main(int argc, char *argv[]){
    }
 
    while (cmenu == 1){
-   bgsurface = IMG_Load("menucreditos.png");
+   bgsurface = IMG_Load("telas/menucreditos.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && cmenu == 1){
@@ -1259,7 +1252,7 @@ int main(int argc, char *argv[]){
    }
 
    while (histmenu == 1){
-   bgsurface = IMG_Load("menuhistoria1.png");
+   bgsurface = IMG_Load("telas/menuhistoria1.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && histmenu == 1){
@@ -1286,7 +1279,7 @@ int main(int argc, char *argv[]){
    }
 
    while (rankmenu == 1){
-   bgsurface = IMG_Load("menuranking.png");
+   bgsurface = IMG_Load("telas/menuranking.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
 
       while (SDL_PollEvent(&event) && rankmenu == 1){
@@ -1678,7 +1671,6 @@ int main(int argc, char *argv[]){
          pbullets2[i].health = 0;
 
          qenemies += 1;
-         //printf("quantidade de inimigos: %d\n", qenemies);
          }
       }
    }
@@ -1743,7 +1735,7 @@ int main(int argc, char *argv[]){
       else{
       controler = 0;
       }
-   spawnenemies(enemy7, 4, "greenenemy.png", 5000, controler, rend);
+   spawnenemies(enemy7, 4, "sprites/greenenemy.png", 5000, controler, rend);
    }
 
    //atualizar inimigos da sétima horda
@@ -1878,7 +1870,7 @@ int main(int argc, char *argv[]){
    SDL_RenderCopy(rend, playertex, NULL, &drawingRect);
    }
    else{
-   bgsurface = IMG_Load("gameover.png");
+   bgsurface = IMG_Load("telas/gameover.png");
    bgtex = SDL_CreateTextureFromSurface(rend, bgsurface);
    SDL_QueryTexture(bgtex, NULL, NULL, &levelWidth, &levelHeight);
    SDL_RenderCopy(rend, bgtex, &cameraRect, NULL);
@@ -1974,11 +1966,11 @@ int main(int argc, char *argv[]){
 
    //desenhar bullets
    if (bonus.health == 0 && gotbonus1 == 1){
-   bullet.surface = IMG_Load("bulletbonus.png");
+   bullet.surface = IMG_Load("sprites/bulletbonus.png");
    bullet.texture = SDL_CreateTextureFromSurface(rend, bullet.surface);
    }
    else{
-   bullet.surface = IMG_Load("bullet12.png");
+   bullet.surface = IMG_Load("sprites/bullet12.png");
    bullet.texture = SDL_CreateTextureFromSurface(rend, bullet.surface);
    }
    if (bullet.health > 0 && !gameover){

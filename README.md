@@ -20,3 +20,4 @@ Dependências:
 -> make build, para compilar o arquivo jogo.c  
 -> make run, para executar o arquivo gerado  
 
+Link do youtube: https://www.youtube.com/watch?v=a8-7h0SRFGE&t=36s
